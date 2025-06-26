@@ -1,11 +1,11 @@
-# Python
+.# Python
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .pytest_cache/
 
 # Virtual Enviroment
-venv/
+.venv/
 .env
 
 # Streamlit
