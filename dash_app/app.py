@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from dash import Dash
 from dash_app.layout import criar_layout
