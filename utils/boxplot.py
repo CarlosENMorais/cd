@@ -1,14 +1,14 @@
 import plotly.graph_objs as go
 
-def gerar_boxplot_frequencia(df, coluna_categorica):
-    categorias = df[coluna_categorica].dropna().unique()
+def gerar_boxplot_frequencia(df, categoric_var, numeric_var):
+    categorias = df[categoric_var].dropna().unique()
     # Garante ordem se for Categorical
-    if hasattr(df[coluna_categorica].dtype, 'categories'):
-        categorias = df[coluna_categorica].cat.categories
+    # if hasattr(df[categoric_var].dtype, 'categories'):
+    #     categorias = df[categoric_var].cat.categories
 
     boxplots = []
     for categoria in categorias:
-        y_data = df.loc[df[coluna_categorica] == categoria, 'Frequência de Atividade Física']
+        y_data = df.loc[df[categoric_var] == categoria, numeric_var]
         if not y_data.empty:
             boxplots.append(
                 go.Box(
@@ -19,12 +19,14 @@ def gerar_boxplot_frequencia(df, coluna_categorica):
             )
     fig = go.Figure(data=boxplots)
     fig.update_layout(
-        title=f'Boxplot da Frequência de Atividade Física por {coluna_categorica}',
-        xaxis_title=coluna_categorica,
-        yaxis_title='Frequência de Atividade Física',
+        # title=f'Boxplot da Frequência de Atividade Física por {categoric_var}',
+        xaxis_title=categoric_var,
+        yaxis_title=numeric_var,
         xaxis_tickangle=20,
         template='plotly_white',
         xaxis=dict(categoryorder='array', categoryarray=list(categorias)),
-        margin=dict(t=70, b=120)
+        # margin=dict(t=70, b=120)
+        margin=dict(l=0, r=0, t=0, b=0),
+        autosize=True,
     )
     return fig

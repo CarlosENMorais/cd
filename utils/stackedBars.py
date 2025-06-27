@@ -57,8 +57,7 @@ def plot_stacked_categoricas(df, qualiVars, obesity_levels, selected_levels):
     fig = go.Figure(traces)
     fig.update_layout(
         barmode="stack",
-        height=50 + 60 * len(qualiVars),
-        title=f'Distribuição percentual das variáveis categóricas<br>para nível(is) de obesidade: {", ".join(selected_levels)}',
+        # height=50 + 60 * len(qualiVars),
         xaxis=dict(
             title='Porcentagem (%)',
             range=[0, 100],
@@ -78,6 +77,11 @@ def plot_stacked_categoricas(df, qualiVars, obesity_levels, selected_levels):
             traceorder="normal"
         ),
         template='plotly_white',
-        margin=dict(l=180, r=10, t=100, b=60),
+        margin=dict(l=0, r=0, t=0, b=0),
+        # margin=dict(l=20, r=20, t=40, b=20),  # margens menores
+        # padding=dict(l=1, r=1, t=1, b=1),   
+        # width=800,  # largura fixa
+        # height=500,  # altura fixa
+        autosize=True  # desabilita redimensionamento automático
     )
     return fig

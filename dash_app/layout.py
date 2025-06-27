@@ -1,262 +1,153 @@
-# import dash_bootstrap_components as dbc
-# from dash import html, dcc
-# from utils.scatter import gerar_scatter
-
-# def criar_layout(colunas_numericas, colunas_categoricas, niveis_obesidade, df):
-#     # CARD DE CONTROLES (filtros)
-#     card_controles = dbc.Card([
-#         dbc.CardHeader("Controles"),
-#         dbc.CardBody([
-#             html.Label("Níveis de Obesidade:"),
-#             dcc.Checklist(
-#                 id='obesidade-checklist',
-#                 options=[{'label': nivel, 'value': nivel} for nivel in niveis_obesidade],
-#                 value=list(niveis_obesidade),
-#                 inline=True
-#             ),
-#             html.Br(),
-#             html.Label("Variável Numérica:"),
-#             dcc.Dropdown(
-#                 id='coluna-dropdown',
-#                 options=[{'label': col, 'value': col} for col in colunas_numericas],
-#                 value=colunas_numericas[0]
-#             ),
-#             html.Br(),
-#             html.Label("Variável Categórica:"),        
-#             dcc.Dropdown(
-#                 id='dropdown-categoria-x',
-#                 options=[{'label': col, 'value': col} for col in colunas_categoricas],
-#                 value=colunas_categoricas[0]
-#             ),
-#             html.Br(),
-#             dcc.Checklist(
-#                 id='fixar-eixo-y-toggle',
-#                 options=[{'label': 'Fixar eixo Y', 'value': 'fixo'}],
-#                 value=['fixo'],
-#                 inline=True
-#             )
-#         ])
-#     ], className="mb-4")
-
-#     # CARD HISTOGRAMA
-#     card_histograma = dbc.Card([
-#         dbc.CardHeader("Histograma"),
-#         dbc.CardBody([
-#             dcc.Graph(id='histograma')
-#         ])
-#     ], className="mb-4")
-
-#     # CARD BOXPLOT
-#     card_boxplot = dbc.Card([
-#         dbc.CardHeader("Boxplot por Categoria"),
-#         dbc.CardBody([
-#             dcc.Graph(id='boxplot-categoria-x')
-#         ])
-#     ], className="mb-4")
-
-#     # CARD SCATTER
-#     card_scatter = dbc.Card([
-#         dbc.CardHeader("Gráfico de Dispersão"),
-#         dbc.CardBody([
-#             dcc.Graph(id='meu-grafico', figure=gerar_scatter(df))
-#         ])
-#     ], className="mb-4")
-    
-#     # CARD STACKED BARS
-#     card_stacked = dbc.Card([
-#         dbc.CardHeader("Distribuição de Variáveis Categóricas por Nível de Obesidade"),
-#         dbc.CardBody([
-#             dcc.Graph(
-#                 id='stacked-categoricas',
-#                 config={'displayModeBar': True},
-#                 style={'height': '600px'}
-#             )
-#         ])
-#     ])
-#     # ], className="mb-4")
-
-#     # ORGANIZAÇÃO DO LAYOUT EM GRID
-#     return dbc.Container(
-#         [
-#             html.H1("Meu Dashboard"),
-#             html.Hr(),
-#             dbc.Row(
-#                 [
-#                     dbc.Col(card_controles, md=12),
-#                 ], 
-#                 align="center"),
-#             dbc.Row(
-#                 [
-#                     dbc.Col(card_scatter, md=6),
-#                     dbc.Col(card_histograma, md=6)
-#                 ], 
-#                 align="center"),
-#             dbc.Row(
-#                 [
-#                     dbc.Col(card_stacked, md=8),
-#                     dbc.Col(card_boxplot, md=4),
-#                 ]
-#             ),
-#         ], 
-#         fluid=False
-#     )
-
-
-import dash_bootstrap_components as dbc
 from dash import html, dcc
 from utils.scatter import gerar_scatter
 
-def criar_layout(colunas_numericas, colunas_categoricas, niveis_obesidade, df):
-    # CARD DE CONTROLES (filtros)
-    card_controles = dbc.Card([
-        dbc.CardHeader("Controles"),
-        dbc.CardBody([
-            html.Label("Níveis de Obesidade:"),
-            dcc.Checklist(
-                id='obesidade-checklist',
-                options=[{'label': nivel, 'value': nivel} for nivel in niveis_obesidade],
-                value=list(niveis_obesidade),
-                inline=True
-            ),
-            html.Br(),
-            html.Label("Variável Numérica:"),
-            dcc.Dropdown(
-                id='coluna-dropdown',
-                options=[{'label': col, 'value': col} for col in colunas_numericas],
-                value=colunas_numericas[0]
-            ),
-            html.Br(),
-            html.Label("Variável Categórica:"),        
-            dcc.Dropdown(
-                id='dropdown-categoria-x',
-                options=[{'label': col, 'value': col} for col in colunas_categoricas],
-                value=colunas_categoricas[0]
-            ),
-            html.Br(),
-            dcc.Checklist(
-                id='fixar-eixo-y-toggle',
-                options=[{'label': 'Fixar eixo Y', 'value': 'fixo'}],
-                value=['fixo'],
-                inline=True
-            )
-        ])
-    ], className="mb-4")
-
-    # CARD HISTOGRAMA - com largura E altura fixas
-    card_histograma = dbc.Card([
-        dbc.CardHeader("Histograma"),
-        dbc.CardBody([
-            dcc.Graph(
-                id='histograma',
-                style={
-                    'height': '400px',
-                    'width': '100%'  # 100% do container pai, não da tela
-                },
-                config={
-                    'responsive': True,
-                    'displayModeBar': True
-                }
-            )
-        ])
-    ], className="mb-4")
-
-    # CARD BOXPLOT - com largura E altura fixas
-    card_boxplot = dbc.Card([
-        dbc.CardHeader("Boxplot por Categoria"),
-        dbc.CardBody([
-            dcc.Graph(
-                id='boxplot-categoria-x',
-                style={
-                    'height': '400px',
-                    'width': '100%'
-                },
-                config={
-                    'responsive': True,
-                    'displayModeBar': True
-                }
-            )
-        ])
-    ], className="mb-4")
-
-    # CARD SCATTER - com largura E altura fixas
-    card_scatter = dbc.Card([
-        dbc.CardHeader("Gráfico de Dispersão"),
-        dbc.CardBody([
-            dcc.Graph(
-                id='meu-grafico', 
-                figure=gerar_scatter(df),
-                style={
-                    'height': '400px',
-                    'width': '100%'
-                },
-                config={
-                    'responsive': True,
-                    'displayModeBar': True
-                }
-            )
-        ])
-    ], className="mb-4")
-    
-    # CARD STACKED BARS - com largura E altura fixas
-    card_stacked = dbc.Card([
-        dbc.CardHeader("Distribuição de Variáveis Categóricas por Nível de Obesidade"),
-        dbc.CardBody([
-            dcc.Graph(
-                id='stacked-categoricas',
-                style={
-                    'height': '500px',
-                    'width': '100%'
-                },
-                config={
-                    'responsive': True,
-                    'displayModeBar': True
-                }
-            )
-        ])
-    ], className="mb-4")
-
-    # ORGANIZAÇÃO DO LAYOUT EM GRID - COM CONTROLE DE LARGURA
-    return dbc.Container([
-        html.H1("Meu Dashboard", className="text-center mb-4"),
-        html.Hr(),
+def criar_layout(col_numerics, col_categorics, levels_obesity, df):
+    return html.Div([     
+        html.Div([
+            html.Div([
+                html.H1("Hábitos Indicadores de Obesidade", style={'text-align': 'left', 'margin': '0px', 'flex': '0 0 auto'}),
+                html.P("por: Carlos Morais", style={'text-align': 'left', 'margin': '0px', 'flex': '1'}),
+            ],className="title"),
+            
+            html.P(["Este dashboard explora dados de 2.111 participantes para investigar correlações entre obesidade e hábitos de vida. Os dados são do Kaggle e integram um projeto academico de Data Science. As visualizações foram feitas com Plotly e o dashboard desenvolvido com Dash."
+            ], style={'margin': '0', 'lineHeight': '1.4'})
+        ], className="header"),   
         
-        # Linha dos controles
-        dbc.Row([
-            dbc.Col(card_controles, width=12)
-        ], className="mb-3"),
         
-        # Linha com scatter e histograma - FORÇANDO LARGURA
-        dbc.Row([
-            dbc.Col(
-                card_scatter, 
-                width=6,
-                style={'maxWidth': '50%', 'flex': '0 0 50%'}  # Força 50% da largura
-            ),
-            dbc.Col(
-                card_histograma, 
-                width=6,
-                style={'maxWidth': '50%', 'flex': '0 0 50%'}  # Força 50% da largura
-            )
-        ], className="mb-3", style={'display': 'flex', 'flexWrap': 'wrap'}),
+        html.Div([
+            # CONTROLES
+            html.Div([
+                html.H3("Controles", className="card-header"),
+                html.Div([
+                    html.Label("Níveis de Obesidade:", className="label"),
+                    dcc.Checklist(
+                        id='obesidade-checklist',
+                        options=[{'label': nivel, 'value': nivel} for nivel in levels_obesity],
+                        value=list(levels_obesity),
+                        inline=False
+                    ),
+                    html.Br(),
+
+                    html.Div([
+                        html.Div([
+                            html.Label("Variável Numérica:", className="label"),
+                            dcc.Dropdown(
+                                id='dropdown-numeric',
+                                options=[{'label': col, 'value': col} for col in col_numerics],
+                                value=col_numerics[0]
+                            ),
+                        ], className="dropdown-col"),
+
+                        html.Div([
+                            html.Label("Variável Categórica:", className="label"),
+                            dcc.Dropdown(
+                                id='dropdown-categoric',
+                                options=[{'label': col, 'value': col} for col in col_categorics],
+                                value=col_categorics[0]
+                            ),
+                        ], className="dropdown-col"),
+
+                    ], className="dropdown-col"),
+
+                    html.Div([
+                        html.H3("Participantes", className="card-header"),
+                        html.Div([
+                            html.H1(id="participantes", className="card-header"),
+                        ],className="card-body"),
+                    ],className="card"),
+                    html.Div([
+                        html.H3("Média Var. Numérica", className="card-header"),
+                        html.Div([
+                            html.H1(id="media", className="card-header"),
+                        ],className="card-body"),
+                    ],className="card"),
+                    html.Div([
+                        html.H3(["Correlação", html.Br(), "Numéricas x Categóricas"], className="card-header"),
+                        html.Div([
+                            html.H1(id="corr-num-cat", className="card-header"),
+                        ],className="card-body"),
+                    ],className="card"),
+                    html.Div([
+                        html.H3(["Correlação", html.Br(), "Eixo X e Eixo Y"], className="card-header"),
+                        html.Div([
+                            html.H1(id="corr-num", className="card-header"),
+                        ],className="card-body"),
+                    ],className="card"),
+
+
+                ], className="card-body")
+            ], className="controls"),
+
+            html.Div([
+                # PRIMEIRA LINHA: SCATTER + HISTOGRAMA
+                html.Div([
+                    html.Div([
+                        html.H3(id='title-boxplot', className="card-header"),
+                        html.Div([
+                            # dcc.Graph(id='boxplot', style={'height': '60vh'})
+                            dcc.Graph(id='boxplot', config={"responsive": True})
+                        ], className="card-body")
+                    ], className="card col-one-third"),
+                    
+                    html.Div([
+                        html.H3("Distribuição de Variáveis Categóricas por Nível de Obesidade", className="card-header"),
+                        html.Div([
+                            # dcc.Graph(id='stacked-categoricas', style={'height': '60vh'})
+                            dcc.Graph(id='stacked-categoricas', config={"responsive": True})
+                        ], className="card-body")
+                    ], className="card col-two-thirds"),
+
+                    
+
+                ], className="row"),
+                
+                # SEGUNDA LINHA: STACKED + BOXPLOT
+                html.Div([
+
+                    html.Div([
+                        html.H3(id='titulo-histograma', className="card-header"),
+                        html.Div([
+                            # dcc.Graph(id='histograma', style={'height': '40vh'}),
+                            dcc.Graph(id='histograma', config={"responsive": True}),
+                            dcc.Checklist(
+                                id='fixar-eixo-y-toggle',
+                                options=[{'label': 'Fixar eixo Y', 'value': 'fixo'}],
+                                value=['fixo'],
+                                inline=True
+                            )
+                        ], className="card-body")
+                    ], className="card col-half"),
+
+                    
+                    html.Div([
+                        html.H3(id='titulo-scatter', className="card-header"),
+                        html.Div([                   
+                            # dcc.Graph(id='meu-grafico', figure=gerar_scatter(df), style={'height': '40vh'}),
+                            dcc.Graph(id='scatter', config={"responsive": True, 'displayModeBar': False,}),
+                            html.Div([
+                                html.Div([
+                                    html.Label("Eixo Y:", className="label"),
+                                    dcc.Dropdown(
+                                        id="dropdown-scatter-axisY",
+                                        options=[{"label": col, "value": col} for col in col_numerics],
+                                        value=col_numerics[0]
+                                    ),
+                                ], className="col"),
+                                html.Div([
+                                    html.Label("Eixo X:", className="label"),
+                                    dcc.Dropdown(
+                                        id="dropdown-scatter-axisX",
+                                        options=[{"label": col, "value": col} for col in col_numerics],
+                                        value=col_numerics[1]
+                                    ),
+                                ], className="col"),
+                            ], className="dropdown-row")
+                        ], className="card-body")
+                    ], className="card col-half"),
+
+                ], className="row"),
+            ],className="col"),
+        ],className="row"),
         
-        # Linha com stacked bar e boxplot - FORÇANDO LARGURA
-        dbc.Row([
-            dbc.Col(
-                card_stacked, 
-                width=8,
-                style={'maxWidth': '66.66%', 'flex': '0 0 66.66%'}  # Força 2/3 da largura
-            ),
-            dbc.Col(
-                card_boxplot, 
-                width=4,
-                style={'maxWidth': '33.33%', 'flex': '0 0 33.33%'}  # Força 1/3 da largura
-            )
-        ], className="mb-3", style={'display': 'flex', 'flexWrap': 'wrap'}),
-        
-    ], 
-    fluid=True,
-    style={
-        'maxWidth': '1200px', 
-        'margin': '0 auto',
-        'padding': '20px'
-    })
+    ], className="main-div")        
+    # ], style={'max-width': 'auto', 'margin': '0 auto', 'padding': '20px'})
