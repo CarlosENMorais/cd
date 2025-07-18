@@ -45,21 +45,7 @@ def registrar_callbacks(app, df, colunas_categoricas, niveis_obesidade):
                                         colunas_categoricas, 
                                         'Nível de Obesidade', 
                                         niveis_selecionados)
-    
-    @app.callback([
-            Output('scatter','figure'),
-            Output('titulo-scatter', 'children'),
-        ],
-        Input('dropdown-categoric', 'value'),
-        Input('dropdown-scatter-axisX', 'value'),
-        Input('dropdown-scatter-axisY', 'value'),
-        Input('obesidade-checklist', 'value'),
-    )
-    def update_scatter(categoric_var, numeric_varX, numeric_varY, niveis_selecionados):
-        fig_scatter = gerar_scatter(df, numeric_varX, numeric_varY, categoric_var, niveis_selecionados)
-        title_scatter = f'Agrupamento de {categoric_var} dentro de {numeric_varX} vs {numeric_varY}'
-        return fig_scatter, title_scatter
-    
+       
     @app.callback([
             Output("participantes", "children"),
             Output("media","children"),

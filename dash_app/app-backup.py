@@ -1,7 +1,7 @@
 import pandas as pd
 from dash import Dash
-from .layout import criar_layout
-from .callbacks import registrar_callbacks
+from dash_app.layout import criar_layout
+from dash_app.callbacks import registrar_callbacks
 
 # Carrega os dados
 df = pd.read_csv('data/dataframe.csv')
@@ -30,4 +30,3 @@ registrar_callbacks(app,
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port, debug=True)
-    # app.run()

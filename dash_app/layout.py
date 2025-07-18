@@ -1,5 +1,5 @@
 from dash import html, dcc
-from utils.scatter import gerar_scatter
+from utils.ml import gerar_tendencia
 
 def criar_layout(col_numerics, col_categorics, levels_obesity, df):
     return html.Div([     
@@ -120,28 +120,11 @@ def criar_layout(col_numerics, col_categorics, levels_obesity, df):
 
                     
                     html.Div([
-                        html.H3(id='titulo-scatter', className="card-header"),
+                        html.H3("Importância das Variáveis por Tendência", className="card-header"),
                         html.Div([                   
                             # dcc.Graph(id='meu-grafico', figure=gerar_scatter(df), style={'height': '40vh'}),
-                            dcc.Graph(id='scatter', config={"responsive": True, 'displayModeBar': False,}),
-                            html.Div([
-                                html.Div([
-                                    html.Label("Eixo Y:", className="label"),
-                                    dcc.Dropdown(
-                                        id="dropdown-scatter-axisY",
-                                        options=[{"label": col, "value": col} for col in col_numerics],
-                                        value=col_numerics[0]
-                                    ),
-                                ], className="col"),
-                                html.Div([
-                                    html.Label("Eixo X:", className="label"),
-                                    dcc.Dropdown(
-                                        id="dropdown-scatter-axisX",
-                                        options=[{"label": col, "value": col} for col in col_numerics],
-                                        value=col_numerics[1]
-                                    ),
-                                ], className="col"),
-                            ], className="dropdown-row")
+                            dcc.Graph(figure=gerar_tendencia(), config={"responsive": True, 'displayModeBar': False,}),
+                            
                         ], className="card-body")
                     ], className="card col-half"),
 
